@@ -1,0 +1,145 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  width: fit-content;
+  min-height: var(--control-height);
+  padding: 0 var(--space-6);
+
+  border: 0;
+  border-radius: var(--radius-pill);
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: 1.2;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Solid */
+
+.solid {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  transition: background-color 300ms ease;
+}
+
+.solid:hover:not(:disabled) {
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary) 85%,
+    white
+  );
+}
+
+/* Gradient */
+
+.gradient {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--color-white);
+  background: var(--gradient-button-primary);
+}
+
+.gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    270deg,
+    #63c8b7 -50%,
+    #eefeE5 120%
+  );
+  opacity: 0;
+  transition: opacity 550ms ease-in-out;
+}
+
+.gradient:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient::before {
+    transition: none;
+  }
+}
+
+/* Gradient icon animation */
+
+.animatedContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.buttonText {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  transition: margin-left 550ms ease-in-out,
+              transform 550ms ease-in-out;
+}
+
+.buttonIcon {
+  margin-left: auto;
+  display: flex;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 400ms ease-in-out,
+              transform 550ms ease-in-out;
+}
+
+.withIcon:hover:not(:disabled) .buttonText {
+  margin-left: 0;
+  transform: translateX(0);
+}
+
+.withIcon:hover:not(:disabled) .buttonIcon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Secondary */
+
+.secondary {
+  color: var(--color-black);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-button);
+  font-size: var(--text-base);
+
+  transition: transform 200ms ease-in-out ;
+}
+
+.secondary:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+/* States */
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient::before,
+  .solid,
+  .secondary,
+  .buttonText,
+  .buttonIcon {
+    transition: none;
+  }
+}

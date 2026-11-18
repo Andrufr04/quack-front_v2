@@ -1,0 +1,90 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.label {
+  color: var(--color-black);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+}
+
+.input {
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-field-background);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-base);
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.invalid {
+  border-color: #d64545;
+}
+
+.error {
+  color: #d64545;
+  font-size: var(--text-sm);
+}
+
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.hasIcon {
+  padding-right: 3rem;
+}
+
+.icon,
+.iconButton {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  pointer-events: none;
+  color: var(--color-text-secondary);
+}
+
+.iconButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-field-background) inset;
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-text);
+}
