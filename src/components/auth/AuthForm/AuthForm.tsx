@@ -1,7 +1,9 @@
+
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import Button from "@/components/ui/Button/Button";
@@ -16,10 +18,20 @@ type AuthFormProps = {
 };
 
 export default function AuthForm({ mode }: AuthFormProps) {
+  const router = useRouter();
   const isSignUp = mode === "sign-up";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!isSignUp) return;
+
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") ?? "");
+
+    router.push(
+     `/sign-up/verify?email=${encodeURIComponent(email)}`
+    );
   }
 
   return (
@@ -45,17 +57,20 @@ export default function AuthForm({ mode }: AuthFormProps) {
             name="password"
             type="password"
             placeholder="Enter your password"
-            autoComplete={isSignUp ? "new-password" : "current-password"}
+            autoComplete={
+              isSignUp ? "new-password" : "current-password"
+            }
             required
           />
 
           {!isSignUp && (
-            <Link href="/forgot-password" className={styles.forgotPassword}>
-                Forgot password?
+            <Link
+              href="/forgot-password"
+              className={styles.forgotPassword}
+            >
+              Forgot password?
             </Link>
           )}
-
-        
         </div>
 
         <div className={styles.actions}>
@@ -79,13 +94,17 @@ export default function AuthForm({ mode }: AuthFormProps) {
               width={20}
               height={20}
             />
-            {isSignUp ? "Sign up with Google" : "Log in with Google"}
+            {isSignUp
+              ? "Sign up with Google"
+              : "Log in with Google"}
           </Button>
         </div>
       </form>
 
       <p className={styles.switchText}>
-        {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+        {isSignUp
+          ? "Already have an account?"
+          : "Don't have an account?"}{" "}
         <Link href={isSignUp ? "/login" : "/sign-up"}>
           {isSignUp ? "Log in" : "Sign up"}
         </Link>

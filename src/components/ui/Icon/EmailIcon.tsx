@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export default function ArrowRightIcon(
+export default function EmailIcon(
   props: SVGProps<SVGSVGElement>
 ) {
   return (

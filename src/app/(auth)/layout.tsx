@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import BackLink from "@/components/auth/BackLink/BackLink";
+
 import styles from "./AuthLayout.module.css";
 
 export default function AuthLayout({
@@ -24,6 +26,8 @@ export default function AuthLayout({
 
       <div className={styles.content}>
         <header className={styles.header}>
+          <BackLink />
+
           <Link href="/" className={styles.logo}>
             Quack
           </Link>

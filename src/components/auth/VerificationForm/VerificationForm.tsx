@@ -2,191 +2,111 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
+import type { ChangeEvent, ClipboardEvent, KeyboardEvent } from "react";
 
 import Button from "@/components/ui/Button/Button";
 import styles from "./VerificationForm.module.css";
 
 const CODE_LENGTH = 6;
 
-export default function VerificationForm() {
-  const [digits, setDigits] = useState<string[]>(
-    Array(CODE_LENGTH).fill("")
-  );
+export default function VerificationForm({ email }: { email?: string }) {
+    const [digits, setDigits] = useState<string[]>(Array(CODE_LENGTH).fill(""));
+    const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const email = "hello@gmail.com";
+    const isComplete = digits.every(Boolean);
 
-  const isComplete = digits.every((digit) => digit !== "");
-
-  function focusInput(index: number) {
-    const input = inputRefs.current[index];
-    input?.focus();
-    input?.select();
-  }
-
-  function updateDigit(index: number, value: string) {
-    if (!/^\d$/.test(value)) return;
-
-    setDigits((previous) => {
-      const next = [...previous];
-      next[index] = value;
-      return next;
-    });
-
-    if (index < CODE_LENGTH - 1) {
-      focusInput(index + 1);
-    }
-  }
-
-  function handleKeyDown(
-    event: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      focusInput(Math.max(0, index - 1));
+    function focus(index: number) {
+        inputs.current[index]?.focus();
     }
 
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      focusInput(Math.min(CODE_LENGTH - 1, index + 1));
-    }
+    function enterCode(value: string, index: number) {
+        const numbers = value.replace(/\D/g, "").slice(0, CODE_LENGTH - index);
+        if (!numbers) return;
 
-    if (event.key === "Backspace") {
-      event.preventDefault();
-
-      if (digits[index]) {
-        setDigits((previous) => {
-          const next = [...previous];
-          next[index] = "";
-          return next;
+        setDigits((prev) => {
+            const next = [...prev];
+            [...numbers].forEach((digit, i) => {
+                next[index + i] = digit;
+            });
+            return next;
         });
-      } else if (index > 0) {
-        focusInput(index - 1);
-      }
+
+        focus(Math.min(index + numbers.length, CODE_LENGTH - 1));
     }
 
-    if (event.key === "Delete") {
-      event.preventDefault();
+    function handleChange(event: ChangeEvent<HTMLInputElement>, index: number) {
+        const value = event.target.value;
 
-      setDigits((previous) => {
-        const next = [...previous];
-        next[index] = "";
-        return next;
-      });
+        if (!value) {
+            setDigits((prev) => prev.map((digit, i) => i === index ? "" : digit));
+            return;
+        }
+
+        enterCode(value, index);
     }
 
-    if (/^[0-9]$/.test(event.key) && !event.ctrlKey && !event.metaKey && !event.altKey) {
-      event.preventDefault();
-      updateDigit(index, event.key);
+    function handleKeyDown(event: KeyboardEvent<HTMLInputElement>, index: number) {
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            focus(Math.max(0, index - 1));
+        }
+
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            focus(Math.min(CODE_LENGTH - 1, index + 1));
+        }
+
+        if (event.key === "Backspace" && !digits[index] && index > 0) {
+            event.preventDefault();
+            setDigits((prev) => prev.map((digit, i) => i === index - 1 ? "" : digit));
+            focus(index - 1);
+        }
     }
-  }
 
-  function handlePaste(
-    event: React.ClipboardEvent<HTMLInputElement>,
-    index: number
-  ) {
-    event.preventDefault();
+    function handlePaste(event: ClipboardEvent<HTMLInputElement>, index: number) {
+        event.preventDefault();
+        enterCode(event.clipboardData.getData("text"), index);
+    }
 
-    const pasted = event.clipboardData
-      .getData("text")
-      .replace(/\D/g, "")
-      .slice(0, CODE_LENGTH - index);
+    return (
+        <section className={styles.verification}>
+            <div className={styles.heading}>
+                <h1>Enter confirmation code</h1>
+                <p>We&apos;ve sent a code to {email || "your email address"}</p>
+            </div>
 
-    if (!pasted) return;
+            <div className={styles.codeFields} role="group" aria-label="6-digit confirmation code">
+                {digits.map((digit, index) => (
+                    <input
+                        key={index}
+                        ref={(el) => { inputs.current[index] = el; }}
+                        className={styles.digit}
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete={index === 0 ? "one-time-code" : "off"}
+                        maxLength={CODE_LENGTH}
+                        value={digit}
+                        id={`verification-digit-${index + 1}`}
+                        name={`verification-digit-${index + 1}`}
+                        aria-label={`Digit ${index + 1} of ${CODE_LENGTH}`}
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => handleChange(e, index)}
+                        onKeyDown={(e) => handleKeyDown(e, index)}
+                        onPaste={(e) => handlePaste(e, index)}
+                    />
+                ))}
+            </div>
 
-    setDigits((previous) => {
-      const next = [...previous];
+            <div className={styles.actions}>
+                <Button type="button" variant="gradient" fullWidth disabled={!isComplete}>
+                    Verify
+                </Button>
 
-      for (let i = 0; i < pasted.length; i++) {
-        next[index + i] = pasted[i];
-      }
-
-      return next;
-    });
-
-    focusInput(Math.min(index + pasted.length, CODE_LENGTH - 1));
-  }
-
-  return (
-    <section className={styles.verification}>
-      <Link
-        href="/sign-up"
-        className={styles.back}
-        aria-label="Back to sign up"
-      >
-        ←
-      </Link>
-
-      <div className={styles.heading}>
-        <h1>Enter confirmation code</h1>
-        <p>We&apos;ve sent a code to {email}</p>
-      </div>
-
-      <div
-        className={styles.codeFields}
-        role="group"
-        aria-label="6-digit confirmation code"
-      >
-        {digits.map((digit, index) => (
-          <input
-            key={index}
-            ref={(element) => {
-              inputRefs.current[index] = element;
-            }}
-            className={styles.digit}
-            type="text"
-            inputMode="numeric"
-            autoComplete={index === 0 ? "one-time-code" : "off"}
-            maxLength={CODE_LENGTH}
-            value={digit}
-            aria-label={`Digit ${index + 1} of ${CODE_LENGTH}`}
-            onFocus={(event) => event.target.select()}
-            onClick={(event) => event.currentTarget.select()}
-            onKeyDown={(event) => handleKeyDown(event, index)}
-            onChange={(event) => {
-              const value = event.target.value;
-
-              if (value.length > 1) {
-                const numbers = value.replace(/\D/g, "");
-                if (!numbers) return;
-
-                setDigits((previous) => {
-                  const next = [...previous];
-                  for (let i = 0; i < numbers.length && index + i < CODE_LENGTH; i++) {
-                    next[index + i] = numbers[i];
-                  }
-                  return next;
-                });
-
-                focusInput(Math.min(index + numbers.length, CODE_LENGTH - 1));
-              } else {
-                updateDigit(index, value);
-              }
-            }}
-            onPaste={(event) => handlePaste(event, index)}
-          />
-        ))}
-      </div>
-
-      <div className={styles.actions}>
-        <Button
-          type="button"
-          variant="gradient"
-          fullWidth
-          disabled={!isComplete}
-        >
-          Verify
-        </Button>
-
-        <p className={styles.resend}>
-          Didn&apos;t get a code?{" "}
-          <button type="button">
-            Click to resend.
-          </button>
-        </p>
-      </div>
-    </section>
-  );
+                <p className={styles.resend}>
+                    Didn&apos;t get a code?{" "}
+                    <button type="button">Click to resend.</button>
+                </p>
+            </div>
+        </section>
+    );
 }

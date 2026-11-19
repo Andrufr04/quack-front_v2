@@ -1,3 +1,4 @@
+
 :root {
   /* Colors */
   --color-white: #ffffff;
@@ -5,6 +6,12 @@
   --color-primary: #63c8b7;
   --color-muted: #b3c0bd;
   --color-input: #e4efed;
+
+  --color-nav-text: #515151;
+  --color-success: #63c883;
+  --color-icon-placeholder: #ff1616;
+  --color-avatar-placeholder: #bdbdbd;
+  --color-divider: rgb(0 0 0 / 8%);
 
   --color-background: var(--color-white);
   --color-text: var(--color-black);
@@ -14,11 +21,13 @@
   /* Typography */
   --font-body: var(--font-inter), sans-serif;
 
-  --text-sm: 0.875rem;   /* 14px */
-  --text-base: 1rem;     /* 16px */
-  --text-lg: 1.25rem;    /* 20px */
-  --text-heading-sm: 1.5rem; /* 24px */
-  --text-heading: 2.5rem; /* 40px */
+  --text-2xs: 0.625rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-heading-sm: 1.5rem;
+  --text-heading: 2.5rem;
 
   --weight-regular: 400;
   --weight-medium: 500;
@@ -26,8 +35,11 @@
 
   /* Spacing */
   --space-1: 0.25rem;
+  --space-1-5: 0.375rem;
   --space-2: 0.5rem;
+  --space-2-5: 0.625rem;
   --space-3: 0.75rem;
+  --space-3-5: 0.875rem;
   --space-4: 1rem;
   --space-5: 1.25rem;
   --space-6: 1.5rem;
@@ -43,12 +55,30 @@
   --radius-pill: 9999px;
 
   /* Sizes */
-  --control-height: 2.5rem; /* 40px */
+  --control-height: 2.5rem;
+
+  /* App sidebar */
+  --sidebar-width: 12.75rem;
+  --sidebar-collapsed-width: 2.625rem;
+  --sidebar-brand-height: 2.125rem;
+  --sidebar-toggle-size: 1.875rem;
+  --sidebar-nav-offset: 2.25rem;
+  --sidebar-item-height: 2.25rem;
+  --sidebar-icon-size: 0.875rem;
+  --sidebar-icon-offset: 0.875rem;
+  --sidebar-badge-size: 1.25rem;
+  --sidebar-badge-compact-size: 1.125rem;
+  --sidebar-avatar-size: 2rem;
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-normal: 250ms;
 
   /* Shadows */
   --shadow-button: 0 3px 10px rgb(0 0 0 / 10%);
+  --shadow-nav: 0 3px 8px rgb(0 0 0 / 6%);
 
-  /* Gradients - temporary until Figma stops are known */
+  /* Gradients */
   --gradient-button-primary: linear-gradient(
     270deg,
     var(--color-primary),
