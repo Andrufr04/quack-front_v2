@@ -112,7 +112,7 @@
 .secondary {
   color: var(--color-black);
   background-color: var(--color-white);
-  box-shadow: var(--shadow-button);
+  box-shadow: var(--shadow);
   font-size: var(--text-base);
 
   transition: transform 200ms ease-in-out ;

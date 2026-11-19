@@ -75,7 +75,7 @@
   --motion-normal: 250ms;
 
   /* Shadows */
-  --shadow-button: 0 3px 10px rgb(0 0 0 / 10%);
+  --shadow: 0 3px 10px rgb(0 0 0 / 10%);
   --shadow-nav: 0 3px 8px rgb(0 0 0 / 6%);
 
   /* Gradients */

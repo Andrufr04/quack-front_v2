@@ -1,0 +1,49 @@
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 350px;
+  height: var(--control-height);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-input);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--space-4);
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-black);
+  font-size: var(--text-sm);
+}
+
+.input::placeholder {
+  color: var(--color-muted);
+}
+
+.input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 var(--control-height);
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.button svg {
+  width: 20px;
+  height: 20px;
+}

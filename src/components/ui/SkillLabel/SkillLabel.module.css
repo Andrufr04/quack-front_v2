@@ -1,0 +1,54 @@
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 2px var(--space-2-5);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.orange {
+  color: #f68b27;
+  background: #ffe7d1;
+}
+
+.red {
+  color: #ff4e59;
+  background: #ffe2e5;
+}
+
+.green {
+  color: #78c75d;
+  background: #e8f9df;
+}
+
+.blue {
+  color: #468fe3;
+  background: #e1efff;
+}
+
+.purple {
+  color: #9968dc;
+  background: #f0e5ff;
+}
+
+.pink {
+  color: #df70ab;
+  background: #ffe5f2;
+}
+
+.yellow {
+  color: #bc911a;
+  background: #fff5cb;
+}
+
+.teal {
+  color: #329d9a;
+  background: #ddf5f2;
+}

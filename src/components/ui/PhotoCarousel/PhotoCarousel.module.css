@@ -1,0 +1,110 @@
+
+.carousel {
+  width: 100%;
+  min-width: 0;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: #d9d9d9;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.previous { left: var(--space-2); }
+.next { right: var(--space-2); }
+
+.previous svg { transform: rotate(180deg); }
+
+.arrow svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.indicators {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1-5);
+  width: 55%;
+  transform: translateX(-50%);
+}
+
+.indicator {
+  flex: 1;
+  min-width: 0;
+  height: 2px;
+  background: rgb(0 0 0 / 15%);
+}
+
+.active {
+  background: var(--color-white);
+}
+
+/* Card */
+
+.card .photo {
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Gallery */
+
+.gallery .photo {
+  aspect-ratio: 3 / 2;
+}
+
+.thumbnails {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  overflow-x: auto;
+}
+
+.thumbnail {
+  flex: 0 0 80px;
+  height: 60px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--color-input);
+  cursor: pointer;
+}
+
+.thumbnail.selected {
+  border-color: var(--color-primary);
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

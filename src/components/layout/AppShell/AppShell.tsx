@@ -16,6 +16,12 @@ import { usePathname } from "next/navigation";
 import { navigation } from "./navigation";
 import styles from "./AppShell.module.css";
 import SidebarIcon from "@/components/ui/Icon/SidebarIcon";
+import SaveButton from "@/components/ui/SaveButton/SaveButton";
+import SkillLabel from "@/components/ui/SkillLabel/SkillLabel";
+import PhotoCarousel from "@/components/ui/PhotoCarousel/PhotoCarousel";
+import TutorCard from "@/components/cards/TutorCard/TutorCard";
+import SearchBar from "@/components/ui/SearchBar/SearchBar";
+
 
 const MIN_WIDTH = 204;
 const MAX_WIDTH = 360;
@@ -205,10 +211,14 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 q
             </Link>
 
-            <main className={styles.main}>{children}
-                
-                
-            
+            <main className={styles.main}>
+                {children}
+                {/*--------------------------------------------------------------------------------------------------------------------------- */}
+
+
+
+
+
             </main>
 
             {/* Mobile navigation */}
